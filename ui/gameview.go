@@ -59,10 +59,7 @@ func (view *GameView) Exit() {
 	view.console.SaveState(savePath(view.hash))
 }
 
-func (view *GameView) Update(t, dt float64) {
-	if dt > 1 {
-		dt = 0
-	}
+func (view *GameView) Update() {
 	window := view.director.window
 	console := view.console
 	if joystickReset(glfw.Joystick1) {
@@ -75,7 +72,7 @@ func (view *GameView) Update(t, dt float64) {
 		view.director.ShowMenu()
 	}
 	updateControllers(window, console)
-	console.StepSeconds(dt)
+	console.StepSeconds(0.0166)
 	gl.BindTexture(gl.TEXTURE_2D, view.texture)
 	setTexture(console.Buffer())
 	drawBuffer(view.director.window)

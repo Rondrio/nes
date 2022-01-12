@@ -11,7 +11,7 @@ import (
 type View interface {
 	Enter()
 	Exit()
-	Update(t, dt float64)
+	Update()
 }
 
 type Director struct {
@@ -46,21 +46,13 @@ func (d *Director) SetView(view View) {
 
 func (d *Director) Step() {
 	gl.Clear(gl.COLOR_BUFFER_BIT)
-	timestamp := glfw.GetTime()
-	dt := timestamp - d.timestamp
-	d.timestamp = timestamp
 	if d.view != nil {
-		d.view.Update(timestamp, dt)
+		d.view.Update()
 	}
 }
 
 func (d *Director) Start(paths []string) {
-	d.menuView = NewMenuView(d, paths)
-	if len(paths) == 1 {
-		d.PlayGame(paths[0])
-	} else {
-		d.ShowMenu()
-	}
+	d.PlayGame(paths[0])
 	d.Run()
 }
 
