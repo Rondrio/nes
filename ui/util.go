@@ -16,6 +16,7 @@ import (
 	"path"
 
 	"github.com/fogleman/nes/nes"
+	"github.com/fogleman/nes/window"
 	"github.com/go-gl/gl/v2.1/gl"
 	"github.com/go-gl/glfw/v3.2/glfw"
 )
@@ -137,6 +138,8 @@ func createTexture() uint32 {
 
 func setTexture(im *image.RGBA) {
 	size := im.Rect.Size()
+
+	window.PaintTexture(im)
 	gl.TexImage2D(
 		gl.TEXTURE_2D, 0, gl.RGBA, int32(size.X), int32(size.Y),
 		0, gl.RGBA, gl.UNSIGNED_BYTE, gl.Ptr(im.Pix))
